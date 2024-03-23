@@ -2,119 +2,97 @@ import React, { useState } from 'react';
 
 const App = () => {
   const [text, setText] = useState('');
-  const [selectionStart, setSelectionStart] = useState(0);
-  const [selectionEnd, setSelectionEnd] = useState(0);
-  const [isBold, setIsBold] = useState(false);
-  const [isItalic, setIsItalic] = useState(false);
-  const [isHeading, setIsHeading] = useState(false);
-
-  const handleBoldClick = () => {
-    if (selectionStart === selectionEnd) return; // No text selected
-
-    const selectedText = text.substring(selectionStart, selectionEnd);
-    let newText;
-
-    if (isBold && selectedText.startsWith('**') && selectedText.endsWith('**')) {
-      // If selected text is already bold, remove the bold syntax
-      newText = text.substring(0, selectionStart) + selectedText.slice(2, -2) + text.substring(selectionEnd);
-    } else {
-      // Otherwise, add bold syntax
-      newText = text.substring(0, selectionStart) + '**' + selectedText + '**' + text.substring(selectionEnd);
-    }
-
-    setText(newText);
-    setIsBold(!isBold);
-
-    // Adjust selection indices
-    const offset = isBold ? -2 : 2;
-    setSelectionStart(selectionStart + offset);
-    setSelectionEnd(selectionEnd + offset);
-  };
-
-  const handleItalicClick = () => {
-    if (selectionStart === selectionEnd) return; // No text selected
-
-    const selectedText = text.substring(selectionStart, selectionEnd);
-    let newText;
-
-    if (isItalic && selectedText.startsWith('_') && selectedText.endsWith('_')) {
-      // If selected text is already italic, remove the italic syntax
-      newText = text.substring(0, selectionStart) + selectedText.slice(1, -1) + text.substring(selectionEnd);
-    } else {
-      // Otherwise, add italic syntax
-      newText = text.substring(0, selectionStart) + '_' + selectedText + '_' + text.substring(selectionEnd);
-    }
-
-    setText(newText);
-    setIsItalic(!isItalic);
-
-    // Adjust selection indices
-    const offset = isItalic ? -1 : 1;
-    setSelectionStart(selectionStart + offset);
-    setSelectionEnd(selectionEnd + offset);
-  };
-
-  const handleHeadingClick = () => {
-    if (selectionStart === selectionEnd) return; // No text selected
-
-    const selectedText = text.substring(selectionStart, selectionEnd);
-
-    // Toggle heading formatting
-    setIsHeading(!isHeading);
-
-    // Toggle heading style
-    const newText = isHeading
-      ? text.substring(0, selectionStart) + selectedText + text.substring(selectionEnd)
-      : text.substring(0, selectionStart) + (selectedText.startsWith('# ') ? selectedText.slice(2) : selectedText) + text.substring(selectionEnd);
-
-    setText(newText);
-  };
-
-  const parseMarkdown = (markdown) => {
-    // Remove heading syntax from markdown
-    const withoutHeading = markdown.replace(/^# /gm, '');
-
-    // Replace bold syntax with HTML strong tags
-    const withBold = withoutHeading.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
-    // Replace italic syntax with HTML em tags
-    const withItalic = withBold.replace(/_(.*?)_/g, '<em>$1</em>');
-
-    return withItalic;
-  };
+  const [formatBold, setFormatBold] = useState(false);
+  const [formatItalic, setFormatItalic] = useState(false);
+  const [formatHeading, setFormatHeading] = useState(false);
+  const [textSelected, setTextSelected] = useState(false);
 
   const handleTextChange = (event) => {
     setText(event.target.value);
+    const selectionStart = event.target.selectionStart;
+    const selectionEnd = event.target.selectionEnd;
+    setTextSelected(selectionStart !== selectionEnd);
   };
 
-  const handleSelectionChange = (event) => {
-    setSelectionStart(event.target.selectionStart);
-    setSelectionEnd(event.target.selectionEnd);
+  const handleFormat = (format) => {
+    const selectedText = document.getElementById('text').value;
+    let newText;
+
+    switch (format) {
+      case 'bold':
+        newText = toggleMarkdownSyntax(selectedText, '**', formatBold);
+        setFormatBold(!formatBold);
+        break;
+      case 'italic':
+        newText = toggleMarkdownSyntax(selectedText, '_', formatItalic);
+        setFormatItalic(!formatItalic);
+        break;
+      case 'heading':
+        newText = toggleHeading(selectedText);
+        setFormatHeading(!formatHeading);
+        break;
+      case 'link':
+        newText = wrapInTag(selectedText, 'a', 'href');
+        break;
+      default:
+        break;
+    }
+
+    setText(newText);
   };
 
-  const textSelected = selectionStart !== selectionEnd;
-  const style = {
-    color: textSelected ? 'white' : 'initial',
+  const toggleMarkdownSyntax = (selectedText, syntax, currentState) => {
+    const wrappedText = syntax + selectedText + syntax;
+    return currentState ? selectedText.slice(syntax.length, -syntax.length) : wrappedText;
+  };
+
+  const toggleHeading = (selectedText) => {
+    const isImage = selectedText.startsWith('![[') && selectedText.endsWith(']]');
+    return formatHeading
+      ? selectedText
+      : isImage
+      ? '## ' + selectedText.substring(3, selectedText.length - 2) + ' ##'
+      : '# ' + selectedText;
+  };
+
+  const wrapInTag = (selectedText, tag, attribute) => {
+    return `<${tag} ${attribute}="${selectedText}" target="_blank">${selectedText}</${tag}>`;
+  };
+
+  const parseMarkdown = (markdown) => {
+    return markdown
+      .replace(/^# /gm, '')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/_(.*?)_/g, '<em>$1</em>');
   };
 
   return (
+    <div className="flex justify-center min-h-screen mt-10">
     <div>
-      <textarea
-        value={text}
-        onChange={handleTextChange}
-        onSelect={handleSelectionChange}
-        style={style}
-      />
-      <button onClick={handleBoldClick} disabled={!textSelected}>{isBold ? "Unbold" : "Bold"}</button>
-      <button onClick={handleItalicClick} disabled={!textSelected}>{isItalic ? "Unitalic" : "Italic"}</button>
-      <button onClick={handleHeadingClick} disabled={!textSelected}>H1</button>
-      <div>
-        <strong>Preview:</strong>
-        <div style={{ fontSize: isHeading ? '24px' : '16px' }}>
-          <div dangerouslySetInnerHTML={{ __html: parseMarkdown(text) }} />
+      <div className='font-extrabold text-4xl text-blue-600 mb-10'>Markdown using own custom string manipulation</div>
+      <div className="flex flex-col items-center">
+        <div className="flex mb-4 gap-4">
+          <button className='w-28 text-blue-300' onClick={() => handleFormat('bold')}>{formatBold ? 'Unbold' : 'Bold'}</button>
+          <button className='w-28 text-blue-300' onClick={() => handleFormat('italic')}>{formatItalic ? 'Unitalic' : 'Italic'}</button>
+          <button className='w-28 text-blue-300' onClick={() => handleFormat('heading')}>{formatHeading ? 'S' : 'H'}</button>
+          <button className='w-28 text-blue-300' onClick={() => handleFormat('link')}>Link</button>
+        </div>
+        <textarea
+          id="text"
+          value={text}
+          onChange={handleTextChange}
+          className="text-white w-[611px] h-20  mb-7"
+        />
+        <div>
+          <strong className='font-bold text-2xl flex justify-center items-center'>Preview:</strong>
+          <div style={{ fontSize: formatHeading ? '36px' : '16px' }}>
+            <div className='w-[600px] break-all ' dangerouslySetInnerHTML={{ __html: parseMarkdown(text) }} />
+          </div>
         </div>
       </div>
     </div>
+  </div>
+  
   );
 };
 
