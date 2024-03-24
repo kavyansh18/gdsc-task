@@ -67,31 +67,32 @@ const App = () => {
   };
 
   return (
-    <div className="flex justify-center min-h-screen mt-10">
-    <div>
-      <div className='font-extrabold text-4xl text-blue-600 mb-10'>Markdown using own custom string manipulation</div>
-      <div className="flex flex-col items-center">
-        <div className="flex mb-4 gap-4">
-          <button className='w-28 text-blue-300' onClick={() => handleFormat('bold')}>{formatBold ? 'Unbold' : 'Bold'}</button>
-          <button className='w-28 text-blue-300' onClick={() => handleFormat('italic')}>{formatItalic ? 'Unitalic' : 'Italic'}</button>
-          <button className='w-28 text-blue-300' onClick={() => handleFormat('heading')}>{formatHeading ? 'S' : 'H'}</button>
-          <button className='w-28 text-blue-300' onClick={() => handleFormat('link')}>Link</button>
-        </div>
-        <textarea
-          id="text"
-          value={text}
-          onChange={handleTextChange}
-          className="text-white w-[611px] h-20  mb-7"
-        />
-        <div>
-          <strong className='font-bold text-2xl flex justify-center items-center'>Preview:</strong>
-          <div style={{ fontSize: formatHeading ? '36px' : '16px' }}>
-            <div className='w-[600px] break-all ' dangerouslySetInnerHTML={{ __html: parseMarkdown(text) }} />
-          </div>
+    <div className="flex flex-col justify-center md:min-h-screen mt-10 px-4">
+  <div className='max-w-5xl'>
+    <div className='font-extrabold text-2xl md:text-4xl text-blue-600 mb-6 md:mb-10 text-center'>Markdown using own custom string manipulation</div>
+    <div className="flex flex-col items-center">
+      <div className="flex flex-wrap justify-center mb-4 md:gap-4 gap-1">
+        <button className='w-full md:w-28 text-blue-300 mb-2 md:mb-0' onClick={() => handleFormat('bold')}>{formatBold ? 'Unbold' : 'Bold'}</button>
+        <button className='w-full md:w-28 text-blue-300 mb-2 md:mb-0' onClick={() => handleFormat('italic')}>{formatItalic ? 'Unitalic' : 'Italic'}</button>
+        <button className='w-full md:w-28 text-blue-300 mb-2 md:mb-0' onClick={() => handleFormat('heading')}>{formatHeading ? 'S' : 'H'}</button>
+        <button className='w-full md:w-28 text-blue-300 mb-2 md:mb-0' onClick={() => handleFormat('link')}>Link</button>
+      </div>
+      <textarea
+        id="text"
+        value={text}
+        onChange={handleTextChange}
+        className="text-white w-full md:w-[400px] h-20 md:h-40 mb-4 md:mb-7 px-2"
+      />
+      <div>
+        <strong className='font-bold text-lg md:text-2xl flex justify-center items-center mb-2'>Preview:</strong>
+        <div style={{ fontSize: formatHeading ? '24px' : '16px' }} className='w-full md:w-[400px] md:break-all'>
+          <div dangerouslySetInnerHTML={{ __html: parseMarkdown(text) }} />
         </div>
       </div>
     </div>
   </div>
+</div>
+
   
   );
 };
