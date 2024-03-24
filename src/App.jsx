@@ -8,40 +8,41 @@ const App = () => {
 
   const handleTextChange = (event) => {
     setText(event.target.value);
-    const selectionStart = event.target.selectionStart;
-    const selectionEnd = event.target.selectionEnd;
-    // Remove unused textSelected state
   };
 
   const handleFormat = (format) => {
     const textarea = document.getElementById('text');
     const selectionStart = textarea.selectionStart;
     const selectionEnd = textarea.selectionEnd;
-    const selectedText = textarea.value.substring(selectionStart, selectionEnd);
-    let newText;
 
-    switch (format) {
-      case 'bold':
-        newText = toggleMarkdownSyntax(textarea.value, '**', selectionStart, selectionEnd, formatBold);
-        setFormatBold(!formatBold);
-        break;
-      case 'italic':
-        newText = toggleMarkdownSyntax(textarea.value, '_', selectionStart, selectionEnd, formatItalic);
-        setFormatItalic(!formatItalic);
-        break;
-      case 'heading':
-        newText = toggleHeading(textarea.value, selectionStart, selectionEnd);
-        setFormatHeading(!formatHeading);
-        break;
-      case 'link':
-        newText = wrapInTag(selectedText, 'a', 'href');
-        break;
-      default:
-        break;
+    // Check if there's any text selected
+    if (selectionStart !== selectionEnd) {
+      const selectedText = textarea.value.substring(selectionStart, selectionEnd);
+      let newText;
+
+      switch (format) {
+        case 'bold':
+          newText = toggleMarkdownSyntax(textarea.value, '**', selectionStart, selectionEnd, formatBold);
+          setFormatBold(!formatBold);
+          break;
+        case 'italic':
+          newText = toggleMarkdownSyntax(textarea.value, '_', selectionStart, selectionEnd, formatItalic);
+          setFormatItalic(!formatItalic);
+          break;
+        case 'heading':
+          newText = toggleHeading(textarea.value, selectionStart, selectionEnd);
+          setFormatHeading(!formatHeading);
+          break;
+        case 'link':
+          newText = wrapInTag(selectedText, 'a', 'href');
+          break;
+        default:
+          break;
+      }
+
+      const updatedText = textarea.value.substring(0, selectionStart) + newText + textarea.value.substring(selectionEnd);
+      setText(updatedText);
     }
-
-    const updatedText = textarea.value.substring(0, selectionStart) + newText + textarea.value.substring(selectionEnd);
-    setText(updatedText);
   };
 
   const toggleMarkdownSyntax = (text, syntax, start, end, currentState) => {
