@@ -5,13 +5,12 @@ const App = () => {
   const [formatBold, setFormatBold] = useState(false);
   const [formatItalic, setFormatItalic] = useState(false);
   const [formatHeading, setFormatHeading] = useState(false);
-  const [textSelected, setTextSelected] = useState(false);
 
   const handleTextChange = (event) => {
     setText(event.target.value);
     const selectionStart = event.target.selectionStart;
     const selectionEnd = event.target.selectionEnd;
-    setTextSelected(selectionStart !== selectionEnd);
+    // Remove unused textSelected state
   };
 
   const handleFormat = (format) => {
@@ -55,7 +54,6 @@ const App = () => {
       ? text.substring(start, end)
       : '# ' + text.substring(start, end);
   };
-  
 
   const wrapInTag = (selectedText, tag, attribute) => {
     return `<${tag} ${attribute}="${selectedText}" target="_blank">${selectedText}</${tag}>`;
@@ -69,7 +67,7 @@ const App = () => {
   };
 
   return (
-    <div className="flex flex-col md:min-h-screen mt-24 px-4">
+    <div className="flex flex-col md:min-h-screen mt-12 px-4">
       <div className='max-w-5xl md:max-w-full'>
         <div className='font-extrabold text-2xl md:text-4xl text-blue-600 mb-6 md:mb-10 text-center'>Markdown using own custom string manipulation</div>
         <div className="flex flex-col items-center">
