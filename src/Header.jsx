@@ -8,14 +8,14 @@ const Header = () => {
       <div className="header flex justify-between items-center md:mx-[450px] mx-6 mt-10">
         
         <NavLink
-          to="/library"
+          to="/"
           className="font-bold text-sm md:text-2xl hover:text-blue-700 text-white cursor-pointer"
         >
           Using React Library
         </NavLink>
 
         <NavLink
-          to="/"
+          to="/app"
           className="font-bold text-sm md:text-2xl hover:text-blue-700 cursor-pointer text-white"
         >
           Custom Manipulation
