@@ -28,11 +28,11 @@ const Library = () => {
 
   return (
     <div>
-      <div className="font-extrabold text-2xl md:text-4xl text-blue-600 mb-6 md:mb-10 text-center md:mt-10">
+      <div className="font-extrabold text-2xl md:text-4xl text-blue-600 mb-6 md:mb-10 text-center md:mt-10 mt-8">
         Using React Library
       </div>
-      <div className="p-[25px] flex gap-[2rem] justify-center items-center">
-        <div className="w-1/2">
+      <div className="md:p-[25px] flex gap-[2rem] justify-center items-center">
+        <div className="md:w-1/2">
           <ReactQuill
             className="h-[300px]"
             value={value1}
