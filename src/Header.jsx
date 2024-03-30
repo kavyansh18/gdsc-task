@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const Header = () => {
   return (
     <>
-      <div className="text-center mt-4 text-4xl text-blue-700 font-extrabold">Markdown</div>
+      <div className="text-center mt-4 text-4xl text-blue-700 font-extrabold">QuickMark Preview</div>
       <div className="header flex justify-between items-center md:mx-[450px] mx-6 mt-10">
         
         <NavLink
