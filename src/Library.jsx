@@ -43,9 +43,13 @@ const Library = () => {
         </div>
       </div>
       {/* Preview Box */}
-      <div className="mt-8 p-4 border border-gray-300 rounded h-[200px] w-[900px] m-auto">
+      <div className="md:mt-12 mt-16 p-4 border border-gray-300 rounded h-[200px] md:w-[900px] w-[330px] m-auto">
         <h2 className="text-lg font-semibold mb-2 text-center">Preview</h2>
-        <div className="prose" dangerouslySetInnerHTML={{ __html: value1 }} />
+        <div
+          className="prose"
+          style={{ overflowWrap: "break-word" }}
+          dangerouslySetInnerHTML={{ __html: value1 }}
+        />
       </div>
     </div>
   );
