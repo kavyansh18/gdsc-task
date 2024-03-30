@@ -34,13 +34,18 @@ const Library = () => {
       <div className="md:p-[25px] flex gap-[2rem] justify-center items-center">
         <div className="md:w-1/2">
           <ReactQuill
-            className="h-[300px]"
+            className="h-[150px]"
             value={value1}
             onChange={(content) => setValue(content)}
             modules={modules}
             formats={formats}
           />
         </div>
+      </div>
+      {/* Preview Box */}
+      <div className="mt-8 p-4 border border-gray-300 rounded h-[200px] w-[900px] m-auto">
+        <h2 className="text-lg font-semibold mb-2 text-center">Preview</h2>
+        <div className="prose" dangerouslySetInnerHTML={{ __html: value1 }} />
       </div>
     </div>
   );
