@@ -28,7 +28,7 @@ const Library = () => {
 
   return (
     <div>
-      <div className="font-extrabold text-2xl md:text-4xl text-blue-600 mb-6 md:mb-10 text-center md:mt-10 mt-8">
+      <div className="font-extrabold text-2xl md:text-4xl text-blue-600 mb-1 md:mb-3 text-center md:mt-10 mt-8  w-[500px] mx-auto rounded-xl p-4 drop-shadow-xl" style={{ backgroundColor: 'white' }}>
         Using React Library
       </div>
       <div className="md:p-[25px] flex gap-[2rem] justify-center items-center">
