@@ -70,7 +70,7 @@ const App = () => {
   return (
     <div className="flex flex-col md:min-h-screen mt-12 px-4">
       <div className='max-w-5xl md:max-w-full'>
-        <div className='font-extrabold text-xl md:text-4xl text-blue-600 mb-6 md:mb-5 text-center md:w-[1000px] mx-auto p-4 drop-shadow-xl  rounded-xl backdrop-blur-2xl border-[2px] border-gray-800'>Markdown using own custom string manipulation</div>
+        <div className='font-extrabold text-xl md:text-4xl text-blue-600 mb-6 md:mb-5 text-center md:w-[1000px] mx-auto p-4 drop-shadow-xl  rounded-xl backdrop-blur-2xl border-[1px] border-gray-800'>Markdown using own custom string manipulation</div>
         <div className="flex flex-col items-center">
           <div className="flex flex-wrap justify-center mb-4 md:gap-4 gap-1">
             <button className='w-full md:w-28 text-blue-300 mb-2 md:mb-0' onClick={() => handleFormat('bold')}>{formatBold ? 'Unbold' : 'Bold'}</button>
