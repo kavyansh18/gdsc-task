@@ -28,13 +28,13 @@ const Library = () => {
 
   return (
     <div>
-      <div className="font-extrabold text-2xl md:text-4xl text-blue-600 mb-1 md:mb-3 text-center md:mt-10 mt-8  w-[500px] mx-auto rounded-xl p-4 drop-shadow-xl" style={{ backgroundColor: 'white' }}>
+      <div className="font-extrabold text-2xl md:text-4xl text-blue-600 mb-1 md:mb-3 text-center md:mt-10 mt-8  w-[500px] mx-auto p-4 drop-shadow-xl backdrop-blur-xl border-[3px] border-gray-800 rounded-xl " style={{ backgroundColor: 'white' }}>
         Using React Library
       </div>
-      <div className="md:p-[25px] flex gap-[2rem] justify-center items-center">
-        <div className="md:w-1/2">
+      <div className="md:p-[25px] flex gap-[2rem] justify-center items-center ">
+        <div className="md:w-1/2 ">
           <ReactQuill
-            className="h-[150px]"
+            className="h-[150px] "
             value={value1}
             onChange={(content) => setValue(content)}
             modules={modules}
@@ -43,7 +43,7 @@ const Library = () => {
         </div>
       </div>
       {/* Preview Box */}
-      <div className="md:mt-12 mt-16 p-4 border border-gray-300 rounded h-[200px] md:w-[900px] w-[330px] m-auto">
+      <div className="md:mt-12 mt-16 p-4 border-[3px] border-gray-800 rounded-xl h-[200px] md:w-[900px] w-[330px] m-auto  backdrop-blur-xl  mb-20">
         <h2 className="text-lg font-semibold mb-2 text-center">Preview</h2>
         <div
           className="prose"
