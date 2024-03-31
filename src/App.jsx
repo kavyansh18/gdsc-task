@@ -70,7 +70,7 @@ const App = () => {
   return (
     <div className="flex flex-col md:min-h-screen mt-12 px-4">
       <div className='max-w-5xl md:max-w-full'>
-        <div className='font-extrabold text-2xl md:text-4xl text-blue-600 mb-6 md:mb-5 text-center w-[1000px] mx-auto p-4 drop-shadow-xl backdrop-blur-xl border-[3px] border-gray-800 rounded-xl' style={{ backgroundColor: 'white' }}>Markdown using own custom string manipulation</div>
+        <div className='font-extrabold text-xl md:text-4xl text-blue-600 mb-6 md:mb-5 text-center md:w-[1000px] mx-auto p-4 drop-shadow-xl  rounded-xl backdrop-blur-2xl'>Markdown using own custom string manipulation</div>
         <div className="flex flex-col items-center">
           <div className="flex flex-wrap justify-center mb-4 md:gap-4 gap-1">
             <button className='w-full md:w-28 text-blue-300 mb-2 md:mb-0' onClick={() => handleFormat('bold')}>{formatBold ? 'Unbold' : 'Bold'}</button>
@@ -78,17 +78,19 @@ const App = () => {
             <button className='w-full md:w-28 text-blue-300 mb-2 md:mb-0' onClick={() => handleFormat('heading')}>{formatHeading ? 'S' : 'H'}</button>
             <button className='w-full md:w-28 text-blue-300 mb-2 md:mb-0' onClick={() => handleFormat('link')}>Link</button>
           </div>
+          <div className='md:flex gap-16'>
           <textarea
             id="text"
             value={text}
             onChange={handleTextChange}
-            className="text-white w-full md:w-[400px] h-20 md:h-40 mb-4 md:mb-7 px-2"
+            className="text-white w-full md:w-[400px] h-36 md:h-40 mb-4 md:mb-7 px-2 md:mt-8 "
           />
           <div>
             <strong className='font-bold text-lg md:text-2xl flex justify-center items-center mb-2'>Preview:</strong>
-            <div style={{ fontSize: formatHeading ? '36px' : '16px' }} className='w-full md:w-[400px] md:break-all'>
+            <div style={{ fontSize: formatHeading ? '36px' : '16px' }} className='w-[350px] md:w-[400px] md:break-all border-[3px] border-gray-800 rounded-xl h-[150px] m-auto backdrop-blur-xl mb-5'>
               <div dangerouslySetInnerHTML={{ __html: parseMarkdown(text) }} />
             </div>
+          </div>
           </div>
         </div>
       </div>
